@@ -80,5 +80,5 @@ a = input("Stock ticker: ")
 b = float(input("Strike price: "))
 c = float(input("Time to expiration: (in days) ")) 
 
-black_scholes(a, b, c)
+print(black_scholes(a, b, c))
 
