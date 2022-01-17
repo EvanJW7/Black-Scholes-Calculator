@@ -1,10 +1,11 @@
+from bs4 import BeautifulSoup
+import requests
 import numpy as np
 import pandas as pd
 import scipy.stats as st
 import math
 import yfinance as yf
-from bs4 import BeautifulSoup
-import requests
+
 
 def black_scholes(stock, X, exp):
     #Interest Rate
@@ -19,25 +20,17 @@ def black_scholes(stock, X, exp):
     print(f"Current Interest Rate: {rfr}")
 
     #STOCK PRICE
-    def getprice(stock):
-        stock = yf.Ticker(stock)
-        price = stock.info['currentPrice']
-        return price
-
-    #VOLATILITY
-    def getvolatility(stock):
-        stock = stock.upper()
-        url = f'https://www.alphaquery.com/stock/{stock}/volatility-option-statistics/180-day/historical-volatility'
-        res = requests.get(url)
-        soup = BeautifulSoup(res.content, 'lxml')
-        volatility = soup.findAll('div', class_ = "indicator-figure-inner")[0]
-        vol = volatility.text
-        return vol
-
-    vol = getvolatility(stock)
-    price = getprice(stock)
-    vol = float(vol)
+    info = yf.Ticker(stock)
+    price = info.info['currentPrice']
     
+    #VOLATILITY
+    stock = stock.upper()
+    url = f'https://www.alphaquery.com/stock/{stock}/volatility-option-statistics/180-day/historical-volatility'
+    res = requests.get(url)
+    soup = BeautifulSoup(res.content, 'lxml')
+    volatility = soup.findAll('div', class_ = "indicator-figure-inner")[0]
+    vol = float(volatility.text)
+
     print(f"Current stock price: {price}")
     print(f"Volatility: {vol*100}%")
     
@@ -87,4 +80,5 @@ a = input("Stock ticker: ")
 b = float(input("Strike price: "))
 c = float(input("Time to expiration: (in days) ")) 
 
-print(black_scholes(a, b, c))
+black_scholes(a, b, c)
+
