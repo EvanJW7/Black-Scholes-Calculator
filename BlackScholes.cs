@@ -90,12 +90,12 @@ public class BlackScholes
         double call_breakeven = call_price + X;
         double put_breakeven = X - put_price;
 		
-		Console.WriteLine("Stock price: " + P);
+	Console.WriteLine("Stock price: " + P);
         Console.WriteLine("Strike price: " + X);
         Console.WriteLine("Interest rate: " + (rfr*100) + '%');
         Console.WriteLine("Days to expiration: " + t*365);
         Console.WriteLine("Volatility: " + (vol*100) + '%');
-		Console.WriteLine();
+	Console.WriteLine();
         Console.WriteLine("Call Breakeven: " + Math.Round(call_breakeven*100.0)/ 100.0);
         Console.WriteLine("Put Breakeven: " + Math.Round(put_breakeven*100.0)/ 100.0);
         Console.WriteLine("Call Price: " + Math.Round(call_price*100.0)/ 100.0);
